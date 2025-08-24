@@ -6,10 +6,10 @@
 
 ### Installation
 
-Install the dependencies:
+Install the dependencies and the pre-commit hook:
 
 ```bash
-npm install
+make setup
 ```
 
 ### Development
@@ -49,3 +49,15 @@ Make sure to deploy the output of `npm run build`
 ---
 
 Built with ❤️ using React Router.
+
+## Utils
+
+.git/hooks/pre-commit
+```pre-commit
+#!/bin/sh
+TARGETS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^app/.*\.(ts|tsx|js|jsx|json|css|md|mdx)$')
+if ! [ -z "$TARGETS" ]; then
+  echo "$TARGETS" | xargs npx prettier --write || exit 1
+  echo "$TARGETS" | xargs git add
+fi
+```
