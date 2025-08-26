@@ -11,6 +11,8 @@ import {
   isRouteErrorResponse,
 } from "react-router";
 
+import Navigation from "~/common/components/navigation";
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -43,7 +45,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <div className="py-28">
+      <Navigation isLoggedIn={true} />
+      <Outlet />
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
