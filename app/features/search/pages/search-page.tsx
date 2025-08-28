@@ -1,14 +1,29 @@
 import type { Route } from "./+types/search-page";
 
+import { Form } from "react-router";
+import { z } from "zod";
+
+import { Hero } from "~/common/components/hero";
 import { Button } from "~/common/components/ui/button";
+import { Input } from "~/common/components/ui/input";
 
 import { BookCard } from "../components/book-card";
 
-export const meta: Route.MetaFunction = () => {
-  return [{ title: "검색 | 도서관⁺" }, { name: "description", content: "간편한 도서관 도서 검색" }];
-};
+const paramsSchema = z.object({
+  query: z.string().optional().default(""),
+});
 
-export const loader = () => {
+export const loader = ({ request }: Route.LoaderArgs) => {
+  const url = new URL(request.url);
+  const { success, data: parsedData } = paramsSchema.safeParse(
+    Object.fromEntries(url.searchParams),
+  );
+  if (!success) {
+    throw new Error("Invalid params");
+  }
+
+  console.log(parsedData);
+
   return [
     {
       image: "https://image.aladin.co.kr/product/31629/43/cover/8934942460_1.jpg",
@@ -46,17 +61,21 @@ export const loader = () => {
   ];
 };
 
+export const meta: Route.MetaFunction = () => {
+  return [
+    { title: "도서 검색 | 도서관⁺" },
+    { name: "description", content: "간편한 도서관 도서 검색" },
+  ];
+};
+
 export default function SearchPage({ loaderData }: Route.ComponentProps) {
-  console.log(loaderData);
   return (
-    <div className="flex flex-col gap-8">
-      <h1>검색</h1>
-      <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
-        <form className="flex gap-4">
-          <input type="text" placeholder="검색어를 입력하세요" />
-          <Button>검색</Button>
-        </form>
-      </div>
+    <div className="space-y-10">
+      <Hero title="도서 검색" subtitle="여러 도서관에서 도서를 한번에 검색하세요" />
+      <Form className="mx-auto flex max-w-screen-sm items-center justify-center gap-2">
+        <Input name="query" placeholder="책이름" className="text-lg" />
+        <Button type="submit">검색</Button>
+      </Form>
       <div>
         <div>검색 도서관</div>
         <ul>
