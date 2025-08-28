@@ -21,8 +21,8 @@ import {
 import { Separator } from "./ui/separator";
 
 const menus = [
-  { name: "Search", to: "/search" },
-  { name: "Libraries", to: "/libraries" },
+  { name: "검색", to: "/search" },
+  { name: "도서관 리스트", to: "/libraries" },
 ];
 
 export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
@@ -62,13 +62,13 @@ export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/profile">
                     <UserIcon className="mr-2 size-4" />
-                    Profile
+                    프로파일
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/my/settings">
                     <SettingsIcon className="mr-2 size-4" />
-                    Settings
+                    설정
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
@@ -77,7 +77,7 @@ export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
                 <DropdownMenuItem asChild className="cursor-pointer">
                   <Link to="/auth/logout">
                     <LogOutIcon className="mr-2 size-4" />
-                    Logout
+                    로그아웃
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
@@ -87,10 +87,10 @@ export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
       ) : (
         <div>
           <Button asChild variant="outline">
-            <Link to="/auth/login">Login</Link>
+            <Link to="/auth/login">로그인</Link>
           </Button>
           <Button asChild>
-            <Link to="/auth/join">Join</Link>
+            <Link to="/auth/join">회원가입</Link>
           </Button>
         </div>
       )}
