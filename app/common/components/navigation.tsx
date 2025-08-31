@@ -27,7 +27,7 @@ const menus = [
 
 export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <nav className="bg-background/50 fixed top-0 right-0 left-0 z-50 flex h-16 items-center justify-between px-20 backdrop-blur">
+    <nav className="bg-background/50 fixed top-0 right-0 left-0 z-50 flex h-16 items-center justify-between px-5 backdrop-blur md:px-10 lg:px-20">
       <div className="flex items-center">
         <Link to="/" className="text-lg font-bold tracking-tighter">
           도서관⁺
@@ -85,7 +85,7 @@ export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
           </DropdownMenu>
         </div>
       ) : (
-        <div>
+        <div className="flex gap-1 md:gap-2 lg:gap-3">
           <Button asChild variant="outline">
             <Link to="/auth/login">로그인</Link>
           </Button>
