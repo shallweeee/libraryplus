@@ -8,9 +8,7 @@ export default [
   ...prefix("/libraries", [
     index("features/library/pages/library-redirect-page.tsx"),
     route("/list", "features/library/pages/library-page.tsx"),
-    /*
     route("/request", "features/library/pages/library-request-page.tsx"),
-    */
   ]),
   ...prefix("/auth", [
     layout("features/auth/layouts/auth-layout.tsx", [

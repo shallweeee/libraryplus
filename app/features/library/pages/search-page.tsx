@@ -16,7 +16,7 @@ const paramsSchema = z.object({
 export const loader = ({ request }: Route.LoaderArgs) => {
   const url = new URL(request.url);
   const { success, data: parsedData } = paramsSchema.safeParse(
-    Object.fromEntries(url.searchParams),
+    Object.fromEntries(url.searchParams)
   );
   if (!success) {
     throw new Error("Invalid params");
@@ -70,7 +70,7 @@ export const meta: Route.MetaFunction = () => {
 
 export default function SearchPage({ loaderData }: Route.ComponentProps) {
   return (
-    <div className="space-y-10">
+    <div>
       <Hero title="도서 검색" subtitle="여러 도서관에서 도서를 한번에 검색하세요" />
       <Form className="mx-auto flex max-w-screen-sm items-center justify-center gap-2">
         <Input name="query" placeholder="책이름" className="text-lg" />
