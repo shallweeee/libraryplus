@@ -14,15 +14,25 @@ import {
 } from "./ui/dropdown-menu";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
+  NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
 import { Separator } from "./ui/separator";
 
 const menus = [
   { name: "검색", to: "/search" },
-  { name: "도서관 리스트", to: "/libraries" },
+  {
+    name: "도서관",
+    to: "/libraries",
+    items: [
+      { name: "리스트", to: "/libraries/list" },
+      { name: "등록요청", to: "/libraries/request" },
+    ],
+  },
 ];
 
 export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
@@ -33,13 +43,42 @@ export default function Navigation({ isLoggedIn }: { isLoggedIn: boolean }) {
           도서관⁺
         </Link>
         <Separator orientation="vertical" className="mx-4 h-6" />
-        <NavigationMenu>
+        <NavigationMenu viewport={false}>
           <NavigationMenuList>
             {menus.map((menu) => (
               <NavigationMenuItem key={menu.name}>
-                <Link to={menu.to} className={navigationMenuTriggerStyle()}>
-                  {menu.name}
-                </Link>
+                {menu.items ? (
+                  <>
+                    <Link to={menu.to}>
+                      <NavigationMenuTrigger>{menu.name}</NavigationMenuTrigger>
+                    </Link>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[100px] gap-3 font-light">
+                        {menu.items?.map((item) => (
+                          <NavigationMenuItem
+                            key={item.name}
+                            className="rounded-md transition-colors select-none"
+                          >
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to={item.to}
+                                className="block space-y-1 p-3 leading-none no-underline outline-none"
+                              >
+                                <span className="text-sm leading-none font-medium">
+                                  {item.name}
+                                </span>
+                              </Link>
+                            </NavigationMenuLink>
+                          </NavigationMenuItem>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                ) : (
+                  <Link to={menu.to} className={navigationMenuTriggerStyle()}>
+                    {menu.name}
+                  </Link>
+                )}
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>
