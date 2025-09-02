@@ -19,3 +19,11 @@ setup:
 	@if [ -f $(HOOK) ]; then echo '* pre-commit hook already exists, skip.'; exit; fi
 	@sed -n '/```pre-commit/,/```/{/^```/d; p}' README.md > $(HOOK)
 	@chmod u+x $(HOOK)
+
+.PHONY: revision
+revision:
+	npm run db:generate
+
+.PHONY: upgrade
+upgrade:
+	npm run db:migrate
