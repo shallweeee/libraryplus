@@ -10,9 +10,17 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
 } from "react-router";
+import { makeSSRClient } from "supa-client";
 
 import Navigation from "~/common/components/navigation";
 
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { client } = makeSSRClient(request);
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  return { user };
+};
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -44,10 +52,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export default function App({ loaderData }: Route.ComponentProps) {
+  const isLoggedIn = loaderData.user !== null;
   return (
     <div className="py-28">
-      <Navigation isLoggedIn={false} />
+      <Navigation isLoggedIn={isLoggedIn} />
       <Outlet />
     </div>
   );
