@@ -58,6 +58,6 @@ Built with ❤️ using React Router.
 TARGETS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^app/.*\.(ts|tsx|js|jsx|json|css|md|mdx)$')
 if ! [ -z "$TARGETS" ]; then
   echo "$TARGETS" | xargs npx prettier --write || exit 1
-  echo "$TARGETS" | xargs git add
+  echo "$TARGETS" | xargs git diff --quiet || exit 2
 fi
 ```
