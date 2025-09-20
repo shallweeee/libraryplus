@@ -1,0 +1,25 @@
+{
+  "importOrder": [
+    "^.+\\.(css|scss|sass|less|styl|svg|png|jpg|jpeg|gif|webp)$",
+    "<THIRD_PARTY_TS_TYPES>",
+    "<TS_TYPES>^[./]",
+    "<THIRD_PARTY_MODULES>",
+    "^~/lib/(.*)$",
+    "^~/components/ui/(.*)$",
+    "^~/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "semi": true,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 100,
+  "trailingComma": "es5"
+}

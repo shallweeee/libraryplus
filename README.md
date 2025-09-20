@@ -1,27 +1,15 @@
-# Welcome to React Router!
+# 도서관⁺
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
-
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+사람과 도서관을 이어주고, 도서관에 가치를 더해주는 서비스
 
 ## Getting Started
 
 ### Installation
 
-Install the dependencies:
+Install the dependencies and the pre-commit hook:
 
 ```bash
-npm install
+make setup
 ```
 
 ### Development
@@ -29,7 +17,7 @@ npm install
 Start the development server with HMR:
 
 ```bash
-npm run dev
+make
 ```
 
 Your application will be available at `http://localhost:5173`.
@@ -44,26 +32,6 @@ npm run build
 
 ## Deployment
 
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
 ### DIY Deployment
 
 If you're familiar with deploying Node applications, the built-in app server is production-ready.
@@ -72,16 +40,24 @@ Make sure to deploy the output of `npm run build`
 
 ```
 ├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+├── package-lock.json
+└── build/
+    ├── client/    # Static assets
+    └── server/    # Server-side code
 ```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
 
 ---
 
 Built with ❤️ using React Router.
+
+## Utils
+
+.git/hooks/pre-commit
+```pre-commit
+#!/bin/sh
+TARGETS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^app/.*\.(ts|tsx|js|jsx|json|css|md|mdx)$')
+if ! [ -z "$TARGETS" ]; then
+  echo "$TARGETS" | xargs npx prettier --write || exit 1
+  echo "$TARGETS" | xargs git diff --quiet || exit 2
+fi
+```
