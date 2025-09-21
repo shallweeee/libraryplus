@@ -1,0 +1,112 @@
+{
+  "id": "31d40118-3f19-49f6-8754-e388623b518f",
+  "prevId": "b627899f-c1e0-4721-b16f-789cb158a2ff",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.libraries": {
+      "name": "libraries",
+      "schema": "",
+      "columns": {
+        "lib_code": {
+          "name": "lib_code",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "lib_name": {
+          "name": "lib_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tel": {
+          "name": "tel",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fax": {
+          "name": "fax",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "homepage": {
+          "name": "homepage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "closed": {
+          "name": "closed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "operating_time": {
+          "name": "operating_time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "book_count": {
+          "name": "book_count",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
