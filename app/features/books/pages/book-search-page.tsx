@@ -1,0 +1,72 @@
+import type { Route } from "./+types/book-search-page";
+
+import { Form } from "react-router";
+import z from "zod";
+
+import type { Book } from "~/common/bookmaru";
+import { buildUrl, searchBooksByTitle } from "~/common/bookmaru";
+import { Hero } from "~/common/components/hero";
+import { Button } from "~/common/components/ui/button";
+import { Input } from "~/common/components/ui/input";
+import { parseFormData } from "~/common/parsers";
+import { makeSSRClient } from "~/supa-client";
+
+import { BookCard } from "../components/book-card";
+
+const formSchema = z.object({
+  search: z.string(),
+});
+
+export const action = async ({ request }: Route.ActionArgs) => {
+  /*
+  const { client } = makeSSRClient(request);
+  await getLoggedInUserId(client);
+  */
+
+  const [error, data] = await parseFormData(formSchema, request);
+  if (error) {
+    return { ...error, books: [] };
+  }
+  console.log(data);
+
+  const books = await searchBooksByTitle(data.search);
+  console.log(books);
+
+  return { books, formErrors: undefined };
+};
+
+export const meta: Route.MetaFunction = () => {
+  return [
+    { title: "도서 검색 | 도서관⁺" },
+    { name: "description", content: "간편한 도서관 도서 검색" },
+  ];
+};
+
+export default function BookSearchPage({ actionData }: Route.ComponentProps) {
+  return (
+    <div>
+      <Hero title="도서 검색" subtitle="여러 도서관에서 도서를 한번에 검색하세요" />
+      <Form
+        method="post"
+        className="mx-auto flex max-w-screen-sm items-center justify-center gap-2"
+      >
+        <Input name="search" placeholder="책이름" className="text-lg" />
+        <Button type="submit">검색</Button>
+      </Form>
+      <div>
+        <div>검색 결과</div>
+        {actionData?.books.map((book: Book) => (
+          <BookCard
+            key={book.isbn13}
+            isbn={book.isbn13}
+            image={book.bookImageURL}
+            title={book.bookname}
+            author={book.authors}
+            publisher={book.publisher}
+            published={book.publication_year}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
