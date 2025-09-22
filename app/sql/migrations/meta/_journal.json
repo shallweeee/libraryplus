@@ -15,6 +15,13 @@
       "when": 1758463288346,
       "tag": "0001_productive_robbie_robertson",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758465531684,
+      "tag": "0002_amazing_true_believers",
+      "breakpoints": true
     }
   ]
 }
