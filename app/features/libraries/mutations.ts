@@ -1,20 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+import type { Library } from "~/common/bookmaru";
 import type { Database } from "~/supa-client";
-
-export type Library = {
-  libCode: string;
-  libName: string;
-  address: string | null;
-  tel: string | null;
-  fax: string | null;
-  latitude: string | null;
-  longitude: string | null;
-  homepage: string | null;
-  closed: string | null;
-  operatingTime: string | null;
-  BookCount: string;
-};
 
 export const updateLibraries = async (client: SupabaseClient<Database>, libraries: Library[]) => {
   const libs = libraries.map((lib) => ({
