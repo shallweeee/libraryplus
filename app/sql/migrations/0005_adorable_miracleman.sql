@@ -1,0 +1,1 @@
+ALTER TABLE "libraries" RENAME COLUMN "dtl_regions" TO "dtl_region";

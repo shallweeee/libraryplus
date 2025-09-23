@@ -22,6 +22,27 @@
       "when": 1758465531684,
       "tag": "0002_amazing_true_believers",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1758642301919,
+      "tag": "0003_blue_havok",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1758642925312,
+      "tag": "0004_spotty_human_fly",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1758643818985,
+      "tag": "0005_adorable_miracleman",
+      "breakpoints": true
     }
   ]
 }

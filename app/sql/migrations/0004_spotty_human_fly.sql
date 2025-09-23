@@ -1,0 +1,1 @@
+ALTER TABLE "libraries" ADD COLUMN "dtl_regions" text;
