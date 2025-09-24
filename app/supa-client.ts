@@ -1,29 +1,6 @@
 import type { CookieMethodsServer } from "@supabase/ssr";
-import type { Database as SupabaseDatabase } from "database.types";
-import type { MergeDeep, SetFieldType, SetNonNullable } from "type-fest";
 
-import {
-  createBrowserClient,
-  createServerClient,
-  parseCookieHeader,
-  serializeCookieHeader,
-} from "@supabase/ssr";
-
-export type Database = MergeDeep<
-  SupabaseDatabase,
-  {
-    public: {
-      Views: {
-        // add view
-      };
-    };
-  }
->;
-
-export const browserClient = createBrowserClient<Database>(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_ANON_KEY!
-);
+import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
 
 export const makeSSRClient = (request: Request) => {
   const headers = new Headers();
@@ -39,7 +16,7 @@ export const makeSSRClient = (request: Request) => {
     },
   };
 
-  const serverSideClient = createServerClient<Database>(
+  const serverSideClient = createServerClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_ANON_KEY!,
     { cookies: cookieMethods }
