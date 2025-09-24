@@ -9,11 +9,11 @@ const paramsSchema = z.object({
   isbn: z.string().min(10).max(13),
 });
 
-export const loader = async ({ request, params }: Route.LoaderArgs) => {
+export const action = async ({ request, params }: Route.ActionArgs) => {
   /*
   const { client } = makeSSRClient(request);
   await getLoggedInUserId(client);
-*/
+  */
   const isbn = parseParams(paramsSchema, params).isbn;
   console.log("isbn", isbn);
   // TODO: isbn 검증
@@ -24,10 +24,10 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 
   const holdingLibCodes = await searchLibrariesByIsbn(isbn, detailRegions);
   const holdingLibs = holdingLibCodes.filter((libCode) => libCodes.includes(libCode));
-  const availables = await checkLoanAvailabilities(isbn, holdingLibs);
-  return { data: availables };
-};
 
-export const meta: Route.MetaFunction = () => {
-  return [{ title: "소장 도서관 | 도서관⁺" }];
+  // TODO: 실시간 정보로 변경
+  const availables = await checkLoanAvailabilities(isbn, holdingLibs);
+
+  // TODO: 도서관 이름(링크), 대출 가능 여부로 변경
+  return { data: availables };
 };
