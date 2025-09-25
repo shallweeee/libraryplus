@@ -1,9 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import type { Library } from "~/common/bookmaru";
-import type { Database } from "~/supa-client";
 
-export const updateLibraries = async (client: SupabaseClient<Database>, libraries: Library[]) => {
+export const updateLibraries = async (client: SupabaseClient, libraries: Library[]) => {
   const libs = libraries.map((lib) => ({
     lib_code: lib.libCode,
     lib_name: lib.libName,

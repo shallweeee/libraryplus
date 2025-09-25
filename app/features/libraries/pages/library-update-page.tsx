@@ -1,6 +1,6 @@
-import type { Library } from "../mutations";
 import type { Route } from "./+types/library-update-page";
 
+import type { Library } from "~/common/bookmaru";
 import { buildUrl, getTotalNumber } from "~/common/bookmaru";
 import { makeSSRClient } from "~/supa-client";
 
@@ -20,6 +20,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     return new Response(null, { status: 404 });
   }
 
+  // TODO: bookmaru로 이동
   const api = "libSrch";
   const reqPageSize = 200;
 

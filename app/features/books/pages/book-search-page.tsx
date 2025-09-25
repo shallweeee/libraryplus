@@ -1,7 +1,5 @@
 import type { Route } from "./+types/book-search-page";
 
-// 테스트 데이터
-import books from "books.json";
 import { Form } from "react-router";
 import z from "zod";
 
@@ -11,6 +9,7 @@ import { Hero } from "~/common/components/hero";
 import { Button } from "~/common/components/ui/button";
 import { Input } from "~/common/components/ui/input";
 import { parseFormData } from "~/common/parsers";
+import { getLoggedInUserId } from "~/features/users/queries";
 import { makeSSRClient } from "~/supa-client";
 
 import { BookCard } from "../components/book-card";
@@ -20,22 +19,17 @@ const formSchema = z.object({
 });
 
 export const action = async ({ request }: Route.ActionArgs) => {
-  /*
   const { client } = makeSSRClient(request);
   await getLoggedInUserId(client);
-  */
 
-  const [error, data] = await parseFormData(formSchema, request);
+  const { error, data } = await parseFormData(formSchema, request);
   if (error) {
     return { ...error, books: [] };
   }
-  console.log(data);
-  /*
-  const books = await searchBooksByTitle(data.search);
-  console.log(books);
-  */
 
-  return { books, formErrors: undefined };
+  const books = await searchBooksByTitle(data.search);
+
+  return { formErrors: undefined, books };
 };
 
 export const meta: Route.MetaFunction = () => {

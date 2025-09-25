@@ -4,16 +4,17 @@ import { z } from "zod";
 
 import { checkLoanAvailabilities, searchLibrariesByIsbn } from "~/common/bookmaru";
 import { parseParams } from "~/common/parsers";
+import { getLoggedInUserId } from "~/features/users/queries";
+import { makeSSRClient } from "~/supa-client";
 
 const paramsSchema = z.object({
   isbn: z.string().min(10).max(13),
 });
 
 export const action = async ({ request, params }: Route.ActionArgs) => {
-  /*
   const { client } = makeSSRClient(request);
   await getLoggedInUserId(client);
-  */
+
   const isbn = parseParams(paramsSchema, params).isbn;
   console.log("isbn", isbn);
   // TODO: isbn 검증

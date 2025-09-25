@@ -41,13 +41,16 @@ export const parseFormData = async <T extends z.ZodObject<any>>(
   schema: T,
   request: Request
 ): Promise<
-  | [{ formErrors: { [P in keyof z.core.output<T>]?: string[] | undefined } }, undefined]
-  | [undefined, z.infer<typeof schema>]
+  | {
+      error: { formErrors: { [P in keyof z.core.output<T>]?: string[] | undefined } };
+      data: undefined;
+    }
+  | { error: undefined; data: z.infer<typeof schema> }
 > => {
   const formData = await request.formData();
   const { success, error, data: parsedData } = schema.safeParse(Object.fromEntries(formData));
   if (!success) {
-    return [{ formErrors: z.flattenError(error).fieldErrors }, undefined];
+    return { error: { formErrors: z.flattenError(error).fieldErrors }, data: undefined };
   }
-  return [undefined, parsedData];
+  return { error: undefined, data: parsedData };
 };
