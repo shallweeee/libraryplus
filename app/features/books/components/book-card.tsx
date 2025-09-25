@@ -1,5 +1,7 @@
-import { useFetcher } from "react-router";
+import { Link, useFetcher } from "react-router";
 
+import { Badge } from "~/common/components/ui/badge";
+import { Button } from "~/common/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "~/common/components/ui/card";
 
 interface BookCardProps {
@@ -13,6 +15,7 @@ interface BookCardProps {
 
 export function BookCard({ isbn, image, title, author, publisher, published }: BookCardProps) {
   const fetcher = useFetcher();
+  const libs = fetcher.data?.libs;
 
   const onClick = () => {
     console.log("here");
@@ -38,8 +41,25 @@ export function BookCard({ isbn, image, title, author, publisher, published }: B
           </CardContent>
         </div>
         {fetcher.state !== "idle" && <CardFooter>확인중</CardFooter>}
-        {fetcher.state === "idle" && fetcher.data && (
-          <CardFooter>{JSON.stringify(fetcher.data.data)}</CardFooter>
+        {fetcher.state === "idle" && libs && (
+          <CardFooter>
+            <ul className="flex flex-col items-start">
+              {libs.map((lib) => (
+                <div className="flex gap-4">
+                  <Button variant="link" asChild>
+                    <a href={lib.homepage} target="_blank" rel="noopener noreferrer">
+                      {lib.lib_name}
+                    </a>
+                  </Button>
+                  {lib.available ? (
+                    <Badge variant="secondary">대출 가능</Badge>
+                  ) : (
+                    <Badge variant="outline">대출 중</Badge>
+                  )}
+                </div>
+              ))}
+            </ul>
+          </CardFooter>
         )}
       </Card>
     </div>

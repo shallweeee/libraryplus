@@ -69,17 +69,13 @@ export const searchLibrariesByIsbn = async (isbn: string, detailRegions: string[
     (dtr) => new URLSearchParams({ ...commonParams, region: dtr.substring(0, 2), dtl_region: dtr })
   );
   const urls = paramsList.map((query) => buildUrl("libSrchByBook", query));
-  //console.log("urls", urls);
   const rs = await Promise.all(urls.map((url) => fetch(url)));
   // TODO: 에러 확인
-  //console.log("rs", rs);
   const ress = await Promise.all(rs.map((r) => r.json()));
   // TODO: 상태 코드 확인
-  //console.log("ress", ress);
   const holdingLibCodes: string[] = ress.flatMap((item) =>
     item.response.libs.map(({ lib }: { lib: Library }) => lib.libCode)
   );
-  //console.log("holdingLibCodes", holdingLibCodes);
   return holdingLibCodes;
 };
 
@@ -90,10 +86,11 @@ export const checkLoanAvailabilities = async (isbn: string, libCodes: string[]) 
   // TODO: 에러 확인
   const ress = await Promise.all(rs.map((r) => r.json()));
   // TODO: 상태 코드 확인
-  //console.log("ress", ress);
   const result = ress
     .filter((res) => res.response.result.hasBook === "Y")
-    .map((res) => [res.response.request.libCode, res.response.result.loanAvailable]);
-  //console.log("result", result);
+    .reduce((acc, res) => {
+      acc[res.response.request.libCode] = res.response.result.loanAvailable === "Y";
+      return acc;
+    }, {});
   return result;
 };

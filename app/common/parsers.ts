@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from "react-router";
 
 import { data } from "react-router";
-import { z } from "zod";
+import z from "zod";
 
 type ErrorType = {
   error_code: string;

@@ -1,11 +1,13 @@
 import type { Route } from "./+types/library-catalog-page";
 
-import { z } from "zod";
+import z from "zod";
 
 import { checkLoanAvailabilities, searchLibrariesByIsbn } from "~/common/bookmaru";
 import { parseParams } from "~/common/parsers";
 import { getLoggedInUserId } from "~/features/users/queries";
 import { makeSSRClient } from "~/supa-client";
+
+import { getLibraryInfosToCheckout } from "../queries";
 
 const paramsSchema = z.object({
   isbn: z.string().min(10).max(13),
@@ -24,11 +26,26 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
   const detailRegions = ["11200", "11220"];
 
   const holdingLibCodes = await searchLibrariesByIsbn(isbn, detailRegions);
-  const holdingLibs = holdingLibCodes.filter((libCode) => libCodes.includes(libCode));
+  const myHoldingLibCodes = holdingLibCodes.filter((libCode) => libCodes.includes(libCode));
 
   // TODO: 실시간 정보로 변경
-  const availables = await checkLoanAvailabilities(isbn, holdingLibs);
+  const [availables, libraryInfos] = await Promise.all([
+    checkLoanAvailabilities(isbn, myHoldingLibCodes),
+    getLibraryInfosToCheckout(client, myHoldingLibCodes),
+  ]);
 
-  // TODO: 도서관 이름(링크), 대출 가능 여부로 변경
-  return { data: availables };
+  libraryInfos.forEach((info) => {
+    const available = availables[info.lib_code];
+    availables[info.lib_code] = { ...info, available };
+  });
+
+  const sortedAvailables = Object.values(availables);
+  sortedAvailables.sort((a, b) => {
+    if (a.available !== b.available) {
+      return a.available ? -1 : 1;
+    }
+    return a.lib_code.localeCompare(b.lib_code);
+  });
+
+  return { libs: sortedAvailables };
 };
