@@ -18,7 +18,6 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
   await getLoggedInUserId(client);
 
   const isbn = parseParams(paramsSchema, params).isbn;
-  console.log("isbn", isbn);
   // TODO: isbn 검증
 
   // TODO: 도서관 코드 리스트 받아오기

@@ -18,7 +18,6 @@ export function BookCard({ isbn, image, title, author, publisher, published }: B
   const libs = fetcher.data?.libs;
 
   const onClick = () => {
-    console.log("here");
     fetcher.submit(null, {
       method: "POST",
       action: `/libraries/${isbn}`,
