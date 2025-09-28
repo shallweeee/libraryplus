@@ -43,6 +43,13 @@
       "when": 1758643818985,
       "tag": "0005_adorable_miracleman",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1759022935660,
+      "tag": "0006_sparkling_nebula",
+      "breakpoints": true
     }
   ]
 }
