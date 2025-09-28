@@ -42,7 +42,7 @@ export const meta: Route.MetaFunction = () => {
 export default function BookSearchPage({ actionData }: Route.ComponentProps) {
   return (
     <div>
-      <Hero title="도서 검색" subtitle="여러 도서관에서 도서를 한번에 검색하세요" />
+      <Hero title="도서 검색" subtitle="여러 도서관의 도서를 한 번에 검색하세요" />
       <div className="space-y-10">
         <Form
           method="post"

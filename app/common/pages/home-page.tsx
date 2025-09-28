@@ -1,5 +1,7 @@
 import type { Route } from "./+types/home-page";
 
+import { Link } from "react-router";
+
 import { Hero } from "~/common/components/hero";
 
 export const meta: Route.MetaFunction = () => {
@@ -15,8 +17,15 @@ export default function HomePage() {
         <div>한 번의 입력으로 여러 도서관을 동시에 검색</div>
         <div>대출 가능 도서관이 한 눈에</div>
         <div>중복 도서는 하나로</div>
-        <div>.</div>
-        <div>곧 시작합니다.</div>
+        <br />
+        <br />
+        <div>
+          지금{" "}
+          <Link to="/auth/join" className="font-bold">
+            가입
+          </Link>
+          하세요.
+        </div>
       </div>
     </div>
   );
