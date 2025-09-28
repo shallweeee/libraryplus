@@ -45,16 +45,20 @@ export function BookCard({ isbn, image, title, author, publisher, published }: B
             <ul className="flex flex-col items-start">
               {libs.map((lib) => (
                 <div className="flex gap-4">
+                  {lib.available ? (
+                    <Badge variant="secondary" className="w-20 text-center">
+                      대출 가능
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="w-20 text-center">
+                      대출 중
+                    </Badge>
+                  )}
                   <Button variant="link" asChild>
                     <a href={lib.homepage} target="_blank" rel="noopener noreferrer">
                       {lib.lib_name}
                     </a>
                   </Button>
-                  {lib.available ? (
-                    <Badge variant="secondary">대출 가능</Badge>
-                  ) : (
-                    <Badge variant="outline">대출 중</Badge>
-                  )}
                 </div>
               ))}
             </ul>
