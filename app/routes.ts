@@ -5,6 +5,7 @@ import { index, layout, prefix, route } from "@react-router/dev/routes";
 export default [
   index("common/pages/home-page.tsx"),
   ...prefix("libraries", [
+    index("features/libraries/pages/library-list-page.tsx"),
     route("/:isbn", "features/libraries/pages/library-catalog-page.tsx"),
     route("/update", "features/libraries/pages/library-update-page.tsx"),
   ]),

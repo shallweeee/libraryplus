@@ -23,7 +23,10 @@ import {
 } from "./ui/navigation-menu";
 import { Separator } from "./ui/separator";
 
-const menus = [{ name: "검색", to: "/search" }];
+const menus = [
+  { name: "검색", to: "/search" },
+  { name: "도서관", to: "/libraries" },
+];
 
 export default function Navigation({ isLoggedIn, email }: { isLoggedIn: boolean; email?: string }) {
   return (
