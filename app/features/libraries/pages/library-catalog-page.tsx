@@ -4,7 +4,7 @@ import z from "zod";
 
 import { checkLoanAvailabilities, searchLibrariesByIsbn } from "~/common/bookmaru";
 import { parseParams } from "~/common/parsers";
-import { getLoggedInUserId } from "~/features/users/queries";
+import { getLoggedInUserId, getMyLibraries } from "~/features/users/queries";
 import { makeSSRClient } from "~/supa-client";
 
 import { getLibraryInfosToCheckout } from "../queries";
@@ -15,14 +15,14 @@ const paramsSchema = z.object({
 
 export const action = async ({ request, params }: Route.ActionArgs) => {
   const { client } = makeSSRClient(request);
-  await getLoggedInUserId(client);
+  const id = await getLoggedInUserId(client);
 
   const isbn = parseParams(paramsSchema, params).isbn;
   // TODO: isbn 검증
 
-  // TODO: 도서관 코드 리스트 받아오기
-  const libCodes = ["111013", "111148", "111439", "111377", "111531"];
-  const detailRegions = ["11200", "11220"];
+  const rows = await getMyLibraries(client, id);
+  const libCodes = rows.map((row) => row.lib_code);
+  const detailRegions = [...new Set(rows.map((row) => row.dtl_region))];
 
   const holdingLibCodes = await searchLibrariesByIsbn(isbn, detailRegions);
   const myHoldingLibCodes = holdingLibCodes.filter((libCode) => libCodes.includes(libCode));
