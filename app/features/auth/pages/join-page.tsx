@@ -38,7 +38,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     return { formErrors: null, signUpError: signUpError.message };
   }
 
-  return redirect("/", { headers });
+  return redirect("/libraries", { headers });
 };
 
 export const meta: Route.MetaFunction = () => {
