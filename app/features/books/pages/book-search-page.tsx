@@ -54,18 +54,24 @@ export default function BookSearchPage({ actionData }: Route.ComponentProps) {
         {actionData?.books && (
           <div className="mx-auto max-w-screen-sm">
             <div className="flex flex-col gap-4">
-              <div className="mx-auto">검색 결과</div>
-              {actionData.books.map((book: Book) => (
-                <BookCard
-                  key={book.isbn13}
-                  isbn={book.isbn13}
-                  image={book.bookImageURL}
-                  title={book.bookname}
-                  author={book.authors}
-                  publisher={book.publisher}
-                  published={book.publication_year}
-                />
-              ))}
+              {actionData.books.length === 0 ? (
+                <div className="mx-auto">검색 결과가 없습니다.</div>
+              ) : (
+                <div className="flex flex-col gap-4">
+                  <div className="mx-auto">검색 결과</div>
+                  {actionData.books.map((book: Book) => (
+                    <BookCard
+                      key={book.isbn13}
+                      isbn={book.isbn13}
+                      image={book.bookImageURL}
+                      title={book.bookname}
+                      author={book.authors}
+                      publisher={book.publisher}
+                      published={book.publication_year}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
